@@ -4,11 +4,13 @@ public class Day01
 {
 	public static void PartA(string[] input)
 	{
-		var sum = input.Aggregate(0, (acc, line) => acc + line
-			.Where(char.IsAsciiDigit)
-			.Select(c => c - '0')
-			.Aggregate(0, (v, c) => v == 0 ? c * 11 : v - v % 10 + c)
-		);
+		var sum = input
+			.Select(line => line
+				.Where(char.IsAsciiDigit)
+				.Select(c => c - '0')
+				.Aggregate(0, (v, c) => v == 0 ? c * 11 : v - v % 10 + c)
+			)
+			.Sum();
 
 		Console.WriteLine(sum);
 	}
@@ -33,33 +35,35 @@ public class Day01
 			values[i.ToString()] = i;
 		}
 
-		var sum = input.Aggregate(0, (acc, line) =>
-		{
-			int start = default, end = default;
-
-			int startIndex = int.MaxValue;
-			int endIndex = int.MinValue;
-
-			foreach (var (k, v) in values)
+		var sum = input
+			.Select(line =>
 			{
-				var i = line.IndexOf(k);
-				var j = line.LastIndexOf(k);
+				int start = default, end = default;
 
-				if (i >= 0 && i < startIndex)
+				int startIndex = int.MaxValue;
+				int endIndex = int.MinValue;
+
+				foreach (var (k, v) in values)
 				{
-					start = v;
-					startIndex = i;
+					var i = line.IndexOf(k);
+					var j = line.LastIndexOf(k);
+
+					if (i >= 0 && i < startIndex)
+					{
+						start = v;
+						startIndex = i;
+					}
+
+					if (j >= 0 && j > endIndex)
+					{
+						end = v;
+						endIndex = j;
+					}
 				}
 
-				if (j >= 0 && j > endIndex)
-				{
-					end = v;
-					endIndex = j;
-				}
-			}
-
-			return acc + start * 10 + end;
-		});
+				return start * 10 + end;
+			})
+			.Sum();
 
 		Console.WriteLine(sum);
 	}
