@@ -8,61 +8,65 @@ public class Day02
 	{
 		var game = 0;
 
-		var sum = input.Aggregate(0, (acc, line) =>
-		{
-			var matches = Regex.Matches(line, @"(\d+) (red|green|blue)");
-
-			var valid = matches.All(match =>
+		var sum = input
+			.Select(line =>
 			{
-				var count = Convert.ToInt32(match.Groups[1].Value);
-				var colour = match.Groups[2].Value;
+				var matches = Regex.Matches(line, @"(\d+) (red|green|blue)");
 
-				return colour switch
+				var valid = matches.All(match =>
 				{
-					"red" => count <= 12,
-					"green" => count <= 13,
-					"blue" => count <= 14,
-					_ => true,
-				};
-			});
+					var count = Convert.ToInt32(match.Groups[1].Value);
+					var colour = match.Groups[2].Value;
 
-			return acc + ++game * (valid ? 1 : 0);
-		});
+					return colour switch
+					{
+						"red" => count <= 12,
+						"green" => count <= 13,
+						"blue" => count <= 14,
+						_ => true,
+					};
+				});
+
+				return ++game * (valid ? 1 : 0);
+			})
+			.Sum();
 
 		Console.WriteLine(sum);
 	}
 
 	public static void PartB(string[] input)
 	{
-		var sum = input.Aggregate(0, (acc, line) =>
-		{
-			var matches = Regex.Matches(line, @"(\d+) (red|green|blue)");
-
-			var red = 0;
-			var green = 0;
-			var blue = 0;
-
-			matches.ToList().ForEach(match =>
+		var sum = input
+			.Select(line =>
 			{
-				var count = Convert.ToInt32(match.Groups[1].Value);
-				var colour = match.Groups[2].Value;
+				var matches = Regex.Matches(line, @"(\d+) (red|green|blue)");
 
-				switch (colour)
+				var red = 0;
+				var green = 0;
+				var blue = 0;
+
+				matches.ToList().ForEach(match =>
 				{
-					case "red":
-						red = Math.Max(red, count);
-						break;
-					case "green":
-						green = Math.Max(green, count);
-						break;
-					case "blue":
-						blue = Math.Max(blue, count);
-						break;
-				};
-			});
+					var count = Convert.ToInt32(match.Groups[1].Value);
+					var colour = match.Groups[2].Value;
 
-			return acc + red * green * blue;
-		});
+					switch (colour)
+					{
+						case "red":
+							red = Math.Max(red, count);
+							break;
+						case "green":
+							green = Math.Max(green, count);
+							break;
+						case "blue":
+							blue = Math.Max(blue, count);
+							break;
+					};
+				});
+
+				return red * green * blue;
+			})
+			.Sum();
 
 		Console.WriteLine(sum);
 	}
