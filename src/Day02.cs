@@ -2,9 +2,9 @@ using System.Text.RegularExpressions;
 
 namespace Aoc;
 
-public class Day02
+public class Day02 : Day
 {
-	public static void PartA(string[] input)
+	public override void PartA(string[] input)
 	{
 		var game = 0;
 
@@ -34,7 +34,7 @@ public class Day02
 		Console.WriteLine(sum);
 	}
 
-	public static void PartB(string[] input)
+	public override void PartB(string[] input)
 	{
 		var sum = input
 			.Select(line =>
