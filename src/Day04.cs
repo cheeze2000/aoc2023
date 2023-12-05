@@ -1,6 +1,6 @@
 namespace Aoc;
 
-public class Day04
+public class Day04 : Day
 {
 	public static List<HashSet<int>[]> Parse(string[] input)
 	{
@@ -22,7 +22,7 @@ public class Day04
 			.ToList();
 	}
 
-	public static void PartA(string[] input)
+	public override void PartA(string[] input)
 	{
 		var sum = Parse(input)
 			.Select(numbers =>
@@ -38,7 +38,7 @@ public class Day04
 		Console.WriteLine(sum);
 	}
 
-	public static void PartB(string[] input)
+	public override void PartB(string[] input)
 	{
 		var matchings = Parse(input)
 			.Select(numbers => numbers[0].Intersect(numbers[1]).Count())
