@@ -1,8 +1,8 @@
 namespace Aoc;
 
-public class Day01
+public class Day01 : Day
 {
-	public static void PartA(string[] input)
+	public override void PartA(string[] input)
 	{
 		var sum = input
 			.Select(line => line
@@ -15,7 +15,7 @@ public class Day01
 		Console.WriteLine(sum);
 	}
 
-	public static void PartB(string[] input)
+	public override void PartB(string[] input)
 	{
 		var values = new Dictionary<string, int>
 		{
