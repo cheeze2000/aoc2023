@@ -1,6 +1,6 @@
 namespace Aoc;
 
-public class Day03
+public class Day03 : Day
 {
 	public record Number(int Value, int Start, int End);
 	public record Symbol(char Value, int Start);
@@ -57,7 +57,7 @@ public class Day03
 		return (nums, syms);
 	}
 
-	public static void PartA(string[] input)
+	public override void PartA(string[] input)
 	{
 		var (rowNums, rowSyms) = Parse(input);
 
@@ -83,7 +83,7 @@ public class Day03
 		Console.WriteLine(sum);
 	}
 
-	public static void PartB(string[] input)
+	public override void PartB(string[] input)
 	{
 		var (rowNums, rowSyms) = Parse(input);
 
