@@ -46,8 +46,8 @@ public class Program
 		var partA = type.GetMethod("PartA");
 		var partB = type.GetMethod("PartB");
 
-		var input = File.ReadAllText($"inputs/{name}.txt");
-		var lines = File.ReadAllLines($"inputs/{name}.txt");
+		var instance = Activator.CreateInstance(type);
+		var input = File.ReadAllLines($"inputs/{name}.txt");
 
 		if (part.HasFlag(Part.A))
 		{
@@ -57,11 +57,7 @@ public class Program
 				return;
 			}
 
-			var param = partA.GetParameters().First();
-
-			Execute(param.ParameterType == typeof(string[])
-				? () => partA.Invoke(null, [lines])
-				: () => partA.Invoke(null, [input]));
+			Execute(() => partA.Invoke(instance, [input]));
 		}
 
 		if (part.HasFlag(Part.B))
@@ -72,11 +68,7 @@ public class Program
 				return;
 			}
 
-			var param = partB.GetParameters().First();
-
-			Execute(param.ParameterType == typeof(string[])
-				? () => partB.Invoke(null, [lines])
-				: () => partB.Invoke(null, [input]));
+			Execute(() => partB.Invoke(instance, [input]));
 		}
 	}
 
