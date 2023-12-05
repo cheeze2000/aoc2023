@@ -99,11 +99,6 @@ public class Day05 : Day
 		{
 			var range = queue.Dequeue();
 
-			if (range.Start > range.End)
-			{
-				continue;
-			}
-
 			if (range.MapsDone == maps.Count)
 			{
 				lowest = Math.Min(lowest, range.Start);
